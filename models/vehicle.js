@@ -31,6 +31,12 @@ const vehicleSchema = Schema({
     passengers: {
         type: Number
     },
+    related_pilots: {
+        type: []
+    },
+    related_films: {
+        type: []
+    },
     photo: {
         type: String
     }
