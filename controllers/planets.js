@@ -20,11 +20,11 @@ const getByName = async(req, res) => {
     ]);
 
     const[relatedFilms] = await Promise.all([
-        Film.find({ name: { $in: planet.relatedFilms }})
+        Film.find({ name: { $in: planet.related_films }})
     ]);
 
     Object.assign(planet.residents = residents);
-    Object.assign(planet.relatedFilms = relatedFilms);
+    Object.assign(planet.related_films = relatedFilms);
 
     if(planet != null) {
         res.status(200).json(planet)
