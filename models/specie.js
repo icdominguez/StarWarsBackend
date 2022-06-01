@@ -25,6 +25,12 @@ const specieSchema = Schema({
     'eye_color(s)': {
         type: []
     },
+    related_films: {
+        type: []
+    },
+    related_characters: {
+        type: []
+    },
     photo: {
         type: String
     }
