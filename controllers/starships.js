@@ -17,16 +17,7 @@ const getByName = async(req, res) => {
 
     const starship = await Starship.findOne({ name: req.params.name });
 
-    const[pilots] = await Promise.all([
-        Character.find({ name: { $in: starship.pilots }})
-    ]);
-
-    const[relatedFilms] = await Promise.all([
-        Film.find({ name: { $in: starship.relatedFilms }})
-    ]);
-
-    Object.assign(starship.pilots = pilots);
-    Object.assign(starship.relatedFilms = relatedFilms);
+    console.log("starship received: " + starship);
 
     if(starship != null) {
         res.status(200).json(starship)

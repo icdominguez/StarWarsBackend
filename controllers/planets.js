@@ -15,17 +15,6 @@ const getAll = async(req,res) => {
 const getByName = async(req, res) => {
     var planet = await Planet.findOne({ name: req.params.name })
 
-    const[residents] = await Promise.all([
-        Character.find({ name: { $in: planet.residents }})
-    ]);
-
-    const[relatedFilms] = await Promise.all([
-        Film.find({ name: { $in: planet.related_films }})
-    ]);
-
-    Object.assign(planet.residents = residents);
-    Object.assign(planet.related_films = relatedFilms);
-
     if(planet != null) {
         res.status(200).json(planet)
     } else {

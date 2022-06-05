@@ -15,21 +15,6 @@ const getAll = async(req,res) => {
 const getByName = async(req, res) => {
     var specie = await Specie.findOne({ name: req.params.name })
 
-    console.log(specie)
-
-    const[characters] = await Promise.all([
-        Character.find({ name: { $in: specie.related_characters }})
-    ]);
-
-    const[relatedFilms] = await Promise.all([
-        Film.find({ name: { $in: specie.related_films }})
-    ]);
-
-    console.log(relatedFilms)
-
-    Object.assign(specie.related_films = relatedFilms);
-    Object.assign(specie.related_characters = characters);
-
     if(specie != null) {
         res.status(200).json(specie)
     } else {
