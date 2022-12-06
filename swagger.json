@@ -1,0 +1,44 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "star wars wiki",
+        "description": "star wars wiki API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "basePath": "/api",
+    "tags": [
+        {
+            "name": "characters",
+            "description": "shows all the characters available"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/characters": {
+            "get": {
+                "tags": [
+                    "characters"
+                ],
+                "description": "shows all the characters available",
+                "parameters": [],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {},
+                "security": []
+            }
+        }
+    },
+    "definitions": {},
+    "securityDefinitions": {},
+    "security": []
+}

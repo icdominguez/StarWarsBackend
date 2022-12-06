@@ -1,6 +1,10 @@
-const express = require('express')
+const express = require('express');
+
 const cors = require('cors');
-const dbConnection = require('../database/config')
+const dbConnection = require('../database/config');
+
+const swaggerUI = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
 class Server {
     
@@ -8,16 +12,17 @@ class Server {
         this.app = express()
         this.port = process.env.PORT
 
-        this.charactersPath = '/api/characters'
-        this.filmsPath = '/api/films'
-        this.planetsPath = '/api/planets'
-        this.speciesPath = '/api/species'
-        this.starshipsPath = '/api/starships'
-        this.vehiclesPath = '/api/vehicles'
+        this.defaultPath = '/api'
+        this.charactersPath = `${this.defaultPath}/characters`
+        this.filmsPath = `${this.defaultPath}/films`
+        this.planetsPath = `${this.defaultPath}/planets`
+        this.speciesPath = `${this.defaultPath}/species`
+        this.starshipsPath = `${this.defaultPath}/starships`
+        this.vehiclesPath = `${this.defaultPath}/vehicles`
 
-        this.connectBBDD()
-        this.middlewares()
-        this.routes()
+        this.middlewares();
+        this.routes();
+        this.connectBBDD();
 
     }
 
@@ -26,14 +31,11 @@ class Server {
     }
 
     middlewares() {
-        this.app.use(express.json())
-        this.app.use(cors())
+        this.app.use(express.json());
+        this.app.use(cors());
     }
 
     routes() {
-        this.app.get('/', (req, res) => {
-            res.send('Welcome to the Star Wars API by icdominguez');
-        })
 
         this.app.use(this.charactersPath, require('../routes/characters'));
         this.app.use(this.filmsPath, require('../routes/films'));
@@ -41,6 +43,16 @@ class Server {
         this.app.use(this.speciesPath, require('../routes/species'));
         this.app.use(this.starshipsPath, require('../routes/starships'));
         this.app.use(this.vehiclesPath, require('../routes/vehicles'));
+
+        swaggerDocument.host = process.env.HOST;
+
+        if(process.env.HOST == "localhost:3000") {
+            swaggerDocument.schemes = ["http"]
+        } else {
+            swaggerDocument.schemes = ["https"]
+        }
+
+        this.app.use(this.defaultPath, swaggerUI.serve, swaggerUI.setup(swaggerDocument));
     }
 
     listen() {
